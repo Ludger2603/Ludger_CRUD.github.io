@@ -5,7 +5,7 @@
 
         <div class="card shadow mb-4">
             <div class="card-body">
-                <form action="{{route('kategori.prosesTambah')}}" method="get">
+                <form action="{{route('kategori.prosesTambah')}}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="form-label">Nama Kategori</label>

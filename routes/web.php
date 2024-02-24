@@ -28,12 +28,33 @@ Route::group(['middleware' => 'auth:user'], function (){
     //Route Tambah
     Route::get('/kategori',[App\Http\Controllers\KategoriController::class,'index'])->name('kategori.index');
     Route::get('/kategori/tambah',[App\Http\Controllers\KategoriController::class,'tambah'])->name('kategori.tambah');
-    Route::get('/kategori/prosesTambah',[App\Http\Controllers\KategoriController::class,'prosesTambah'])->name('kategori.prosesTambah');
+    Route::post('/kategori/prosesTambah',[App\Http\Controllers\KategoriController::class,'prosesTambah'])->name('kategori.prosesTambah');
     //Route Ubah
     Route::get('/kategori/ubah/{id}',[App\Http\Controllers\KategoriController::class,'ubah'])->name('kategori.ubah');
     Route::get('/kategori/prosesUbah',[App\Http\Controllers\KategoriController::class,'prosesUbah'])->name('kategori.prosesUbah');
     Route::get('/kategori/hapus/{id}',[App\Http\Controllers\KategoriController::class,'hapus'])->name('kategori.hapus');
+
+    Route::get('/berita',[App\Http\Controllers\BeritaController::class,'index'])->name('berita.index');
+    Route::get('/berita/tambah',[App\Http\Controllers\BeritaController::class,'tambah'])->name('berita.tambah');
+    Route::post('/berita/prosesTambah',[App\Http\Controllers\BeritaController::class,'prosesTambah'])->name('berita.prosesTambah');
+    //Route Ubah
+    Route::get('/berita/ubah/{id}',[App\Http\Controllers\BeritaController::class,'ubah'])->name('berita.ubah');
+    Route::post('/berita/prosesUbah',[App\Http\Controllers\BeritaController::class,'prosesUbah'])->name('berita.prosesUbah');
+    Route::get('/berita/hapus/{id}',[App\Http\Controllers\BeritaController::class,'hapus'])->name('berita.hapus');
    });
    Route::get('/logout',[App\Http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
  
 });
+
+Route::get('files/{filename}', function ($filename){
+    $path = storage_path('app/public/' . $filename);
+    if (!File::exists($path)) {
+     abort(404);
+    }
+    $file = File::get($path);
+    $type = File::mimeType($path);
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    return $response;
+})->name('storage');
+
